@@ -1,8 +1,6 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
-db.getCollection("stages_add_fields").deleteMany({})
-db.getCollection("stages_add_fields").insertMany([
+db.stages_add_fields.deleteMany({})
+db.stages_add_fields.insertMany([
     {
         _id: 1,
         student: "Maya",

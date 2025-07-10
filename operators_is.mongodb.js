@@ -13,6 +13,7 @@ db.fruits2.insertMany( [
 
 db.fruits2.find({})
 
+// 返回字段类型
 db.fruits2.aggregate([
    {
      $project: {

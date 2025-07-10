@@ -1,7 +1,6 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
-db.getCollection('inventory').insertMany([
+
+db.inventory.insertMany([
   {
     item: 'journal',
     qty: 25,
@@ -33,46 +32,31 @@ db.getCollection('inventory').insertMany([
     dim_cm: [10, 15.25]
   }
 ]);
-
-use('mongodbVSCodePlaygroundDB');
-db.getCollection("inventory").deleteMany({tags:{$exists:false}});
-
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({});
+db.inventory.deleteMany({tags:{$exists:false}});
+db.inventory.find({});
 
 // 精准匹配数组（顺序也要匹配）
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"tags":["blank","red"]});
+db.inventory.find({"tags":["blank","red"]});
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"tags":["red","blank"]});
+db.inventory.find({"tags":["red","blank"]});
 
 // 匹配(包含)数组（顺序可不匹配）$all操作符两边都为数组，判断是否是包含关系
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"tags":{$all:["red","blank"]}});
+db.inventory.find({"tags":{$all:["red","blank"]}});
 
 // 等值匹配
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"tags":"red"});
+db.inventory.find({"tags":"red"});
 
 // 比较操作符匹配
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"dim_cm":{"$gt": 21}});
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"dim_cm":{"$lt": 12}});
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"dim_cm":{"$lte": 45}});
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"dim_cm":{"$lte": 50,"$gte":40}});
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"dim_cm":{"$gt": 22,"$lt":30}});
+db.inventory.find({"dim_cm":{"$gt": 21}});
+db.inventory.find({"dim_cm":{"$lt": 12}});
+db.inventory.find({"dim_cm":{"$lte": 45}});
+db.inventory.find({"dim_cm":{"$lte": 50,"$gte":40}});
+db.inventory.find({"dim_cm":{"$gt": 22,"$lt":30}});
 
 // 指定位置值匹配元素
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({'dim_cm.1': { $gt: 25 }});
+db.inventory.find({'dim_cm.1': { $gt: 25 }});
 
 // 长度匹配
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({'tags': { $size: 2}});
+db.inventory.find({'tags': { $size: 2}});
 
 

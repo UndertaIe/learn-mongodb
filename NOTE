@@ -1,0 +1,31 @@
+非关系型数据库MongoDB
+
+mongodb环境：
+1. 创建docker-compose.yaml
+  version: '3'
+  services:
+    mongo:
+      image: mongo
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: mymongodb
+      ports:
+        - "27017:27017"
+
+2. docker compose up -d 
+3. docker exec -it 0ce6a2f540b9 bash
+4. mongosh -u root 
+
+show dbs;
+use mydb;
+
+URI: mongodb://root:mymongodb@localhost:27017/
+
+bson.D: An ordered representation of a BSON document (slice): []E 元素类型为kv的有序slice
+bson.E: A single element inside a D type: struct {Key string Value interface{}} kv键值对类型的struct
+bson.M: An unordered representation of a BSON document (map): map[string]interface{} map类型
+bson.A: An ordered representation of a BSON array: []interface{} 元素类型为any的有序slice
+
+MongoDB文档：https://www.mongodb.com/docs/
+Go Driver文档：https://www.mongodb.com/docs/drivers/go/current/

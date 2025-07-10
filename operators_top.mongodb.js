@@ -113,7 +113,8 @@ use('test');
 db.test03.deleteMany({})
 db.test03.insertMany([
 {"name":{"k1":"v1","k2":"v2"}},
-{"name":{"k1":"v2","k2":"v1"}}
+{"name":{"k1":"v2","k2":"v1"}},
+{"name":{"k1":"v2","k2":"v2"}}
 ])
 db.test03.find({})
 
@@ -124,6 +125,7 @@ db.test03.aggregate([
    }
 ])
 
+// err usage
 db.test03.aggregate([
    {$match: {
       "name.k1":{"$eq":"$name.k2"}
@@ -137,13 +139,15 @@ db.test04.insertMany([
 {"name":[{"k1":1,"k2":1},{"k1":1,"k2":2}]},
 {"name":[{"k1":1,"k2":1},{"k1":1,"k2":1}]},
 ])
-db.test04.find({
-   "name":{
-      $elemMatch: {
-         "$eq":["$k1","v1"],
-      }
-   }
-})
+
+// err usage
+// db.test04.find({
+//    "name":{
+//       $elemMatch: {
+//          "$eq":["$k1","$k2"],
+//       }
+//    }
+// })
 
 db.players.insertMany([
    { _id: 1, name: "Miss Cheevous",  scores: [ 10, 5, 10 ] },
@@ -151,6 +155,7 @@ db.players.insertMany([
    { _id: 3, name: "Mrs. Eppie Delta ", scores: [ 9, 8, 8 ] }
 ])
 
+// 定义一个函数去匹配文档
 db.players.find( {$expr: { $function: {
    body: function(name) { return hex_md5(name) == "15b0a220baa16331e8d80e15367677ad"; },
    args: [ "$name" ],

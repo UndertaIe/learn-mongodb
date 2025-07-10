@@ -1,7 +1,6 @@
 // Select the database to use.
-use('mongodbVSCodePlaygroundDB');
-
-db.getCollection('inventory').insertMany([
+db.inventory.deleteMany({});
+db.inventory.insertMany([
   {
     item: 'journal',
     qty: 25,
@@ -40,18 +39,11 @@ db.getCollection('inventory').insertMany([
   }
 ]);
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection("inventory").deleteMany({});
+db.inventory.find({});
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({});
+db.inventory.find({status:"D"});
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({status:"D"});
+db.inventory.find({status:{$nin:["D","B"]}});
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({status:{$nin:["D","B"]}});
-
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({status:{$in:["D","B"]}});
+db.inventory.find({status:{$in:["D","B"]}});
 

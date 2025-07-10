@@ -1,8 +1,6 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
-db.getCollection("aggregate").deleteMany({})
-db.getCollection("aggregate").insertMany([
+db.aggregate.deleteMany({})
+db.aggregate.insertMany([
     {   
         name:"tata",
         price:20,
@@ -21,12 +19,19 @@ db.getCollection("aggregate").insertMany([
     },
 ]);
 
-db.getCollection("aggregate").find({});
-db.getCollection("aggregate").aggregate([
+db.aggregate.find({});
+
+db.aggregate.aggregate([
     {$group: {
       _id: "$name",
       totalPrice: {
         $sum: "$price"
+      },
+      count: {
+        $sum:1
+      },
+      avgPrice: {
+        $avg: "$price"
       }
     }}
 ]);

@@ -1,7 +1,5 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
-db.temperatureChange.deleteMany({})
+db.temperatureChange.deleteMany({});
 db.temperatureChange.insertMany( [
     { _id: 1, startTemp: 50, endTemp: 80 },
     { _id: 2, startTemp: 40, endTemp: 40 },
@@ -9,7 +7,7 @@ db.temperatureChange.insertMany( [
     { _id: 4, startTemp: 60, endTemp: 70 }
  ] );
 
- /*
+  /*
     select *, abs(start-end) as delta
     from temperatureChange
  */
@@ -18,6 +16,22 @@ db.temperatureChange.insertMany( [
         $set:{
             rubbish:{
                 $add:["$startTemp", "$endTemp"]
+            }
+        }
+    }
+ ])
+
+ /*
+    select *, abs(start-end) as delta
+    from temperatureChange
+ */
+ db.temperatureChange.aggregate([
+    {
+        $set:{
+            delta:{
+                $abs:{
+                    $subtract:["$startTemp", "$endTemp"]
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ db.fruits.insertMany( [
 
 db.fruits.find({})
 
+// 判断是否包含在数组
 db.fruits.aggregate([
    {
      $set: {

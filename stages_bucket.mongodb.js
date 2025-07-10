@@ -1,8 +1,5 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
 db.artists.deleteMany({})
-
 db.artists.insertMany([
   { "_id" : 1, "last_name" : "Bernard", "first_name" : "Emil", "year_born" : 1868, "year_died" : 1941, "nationality" : "France" },
   { "_id" : 2, "last_name" : "Rippl-Ronai", "first_name" : "Joszef", "year_born" : 1861, "year_died" : 1927, "nationality" : "Hungary" },
@@ -13,7 +10,6 @@ db.artists.insertMany([
   { "_id" : 7, "last_name" : "Redon", "first_name" : "Odilon", "year_born" : 1840, "year_died" : 1916, "nationality" : "France" },
   { "_id" : 8, "last_name" : "Diriks", "first_name" : "Edvard", "year_born" : 1855, "year_died" : 1930, "nationality" : "Norway" }
 ])
-
 db.artists.find()
 
 // 按区间分组
@@ -40,6 +36,7 @@ db.artists.aggregate( [
   }
 ] )
 
+db.artwork.deleteMany({})
 db.artwork.insertMany([
   { "_id" : 1, "title" : "The Pillars of Society", "artist" : "Grosz", "year" : 1926,
       "price" : NumberDecimal("199.99") },

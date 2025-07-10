@@ -14,7 +14,20 @@ db.items.insertMany( [
    { "_id" : 3, "item" : "jkl", description: "product 3", "instock" : 60 }
  ] )
 
- // join后合并文档。
+ // lookup:join表后在文档中加了一个对应匹配列文档的字段
+db.orders.aggregate( [
+   {
+      $lookup: {
+         from: "items",
+         localField: "item",    // field in the orders collection
+         foreignField: "item",  // field in the items collection
+         as: "fromItems"
+      }
+   }
+] )
+
+
+ // join后的文档合并文档根路径。
  db.orders.aggregate( [
    {
       $lookup: {
@@ -27,7 +40,7 @@ db.items.insertMany( [
    {
       $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$fromItems", 0 ] }, "$$ROOT" ] } }
    },
-   // { $project: { fromItems: 0 } }
+   { $project: { fromItems: 0 } }
 ] )
 
 

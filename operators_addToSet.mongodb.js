@@ -1,5 +1,3 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
 db.sales02.deleteMany({})
 db.sales02.insertMany( [
@@ -14,7 +12,7 @@ db.sales02.insertMany( [
  /*
 
  */
-// 去重后添加到数组中
+// 分组将元素去重后添加到数组
  db.sales02.aggregate([
     {
         $group:{
@@ -24,7 +22,7 @@ db.sales02.insertMany( [
     }
  ])
 
- // 直接添加到数组中
+ // 分组后列直接添加到数组
  db.sales02.aggregate([
     {
         $group:{

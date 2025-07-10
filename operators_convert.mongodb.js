@@ -6,8 +6,15 @@ db.orders2.insertMany([
    { "_id" : 1, "item" : "abc1", description: "product 1", qty: 300 },
    { "_id" : 2, "item" : "abc2", description: "product 2", qty: 200 },
    { "_id" : 3, "item" : "xyz1", description: "product 3", qty: 250 },
+   { "_id" : 4, "item" : "xyz1", description: "product 3", qty:  0},
 ])
 db.orders2.find()
+
+db.orders2.aggregate([
+   {
+      $set: {newcol:{$toBool: "$qty"}}
+   }
+])
 
 // https://www.mongodb.com/docs/manual/reference/operator/aggregation/convert/
 /*

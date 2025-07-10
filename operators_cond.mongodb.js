@@ -9,7 +9,7 @@ db.orders2.insertMany([
 ])
 db.orders2.find()
 
-// 从字段中获取值
+// 通过逻辑判断从字段中获取值
 db.orders2.aggregate([
    {
       $set: {

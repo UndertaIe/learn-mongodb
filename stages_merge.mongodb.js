@@ -1,5 +1,3 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
 db.getSiblingDB("zoo").salaries.deleteMany({})
 db.getSiblingDB("zoo").salaries.insertMany([
@@ -24,12 +22,16 @@ db.getSiblingDB("zoo").salaries.aggregate( [
   { $merge : { into: { db: "reporting", coll: "budgets" }, on: "_id",  whenMatched: "replace", whenNotMatched: "insert" } }
 ] )
 
+db.newDailySales201905.createIndex( { dept: 1 ,fiscal_year:1}, { unique: true } )
+
+// merge将多个文档合并到（写到）另外一个集合
 db.getSiblingDB("zoo").salaries.aggregate( [
   { $match: { fiscal_year: 2019 }},
   { $group: { _id: { fiscal_year: "$fiscal_year", dept: "$dept" }, employees: { $push: "$employee" } } },
   { $project: { _id: 0, dept: "$_id.dept", fiscal_year: "$_id.fiscal_year", employees: 1 } },
-  { $merge : { into : { db: "reporting", coll: "orgArchive" }, on: [ "dept", "fiscal_year" ], whenMatched: "fail" } }
+  { $merge : { into : { db: "test", coll: "newDailySales201905" }, on: [ "dept", "fiscal_year" ], whenMatched: "fail" } }
 ] )
+db.newDailySales201905.find();
 
 db.purchaseorders.insertMany( [
   { _id: 1, quarter: "2019Q1", region: "A", qty: 200, reportDate: new Date("2019-04-01") },
@@ -44,4 +46,5 @@ db.purchaseorders.aggregate( [
   { $group: { _id: "$quarter", purchased: { $sum: "$qty" } } },  // group purchase orders by quarter
   { $merge : { into: "quarterlyreport", on: "_id",  whenMatched: "merge", whenNotMatched: "insert" } }
 ])
+db.quarterlyreport.find();
 

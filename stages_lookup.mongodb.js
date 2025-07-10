@@ -1,6 +1,5 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
+db.orders.deleteMany({})
 db.orders.insertMany( [
   { "_id" : 1, "item" : "almonds", "price" : 12, "quantity" : 2 },
   { "_id" : 2, "item" : "pecans", "price" : 20, "quantity" : 1 },
@@ -25,7 +24,7 @@ db.inventory.find({})
 // foreignField：被join表的字段
 // as：join的文档数组对应的字段名
 
-// 字段相等join
+// 字段值相等join
 db.orders.aggregate( [{
   $lookup: {
     from: "inventory",

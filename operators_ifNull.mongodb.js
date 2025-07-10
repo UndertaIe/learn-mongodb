@@ -10,6 +10,7 @@ db.inventory03.insertMany( [
 
 db.inventory03.find({})
 
+// ifNull传入字段判断不存在或为null值则字段重新赋新值
 db.inventory03.aggregate( [
    {
       $set: {

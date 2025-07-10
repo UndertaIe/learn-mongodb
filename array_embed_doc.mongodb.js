@@ -1,7 +1,6 @@
  // Select the database to use.
-use('mongodbVSCodePlaygroundDB');
-db.getCollection("inventory").deleteMany({});
-db.getCollection('inventory').insertMany([
+db.inventory.deleteMany({});
+db.inventory.insertMany([
   {
     item: 'journal',
     instock: [
@@ -17,7 +16,7 @@ db.getCollection('inventory').insertMany([
     item: 'paper',
     instock: [
       { warehouse: 'A', qty: 60 },
-      { warehouse: 'B', qty: 15 }
+      { warehouse: 'B', qty: 15 ,extrafield:"noob"}
     ]
   },
   {
@@ -28,6 +27,13 @@ db.getCollection('inventory').insertMany([
     ]
   },
   {
+    item: 'plannerB',
+    instock: [
+      { qty: 5 , warehouse: 'B'},
+      { warehouse: 'A', qty: 40 }
+    ]
+  },
+  {
     item: 'postcard',
     instock: [
       { warehouse: 'B', qty: 15 },
@@ -35,45 +41,39 @@ db.getCollection('inventory').insertMany([
     ]
   },
   {
-    item: 'postcard',
+    item: 'postcardB',
     instock: [
-      { warehouse: 'B', qty: 15,"time":1 },
-      { warehouse: 'C', qty: 35,time:2 }
+      { warehouse: 'B', qty: 25,"time":1 },
+      { warehouse: 'C', qty: 15,time:2 }
     ]
   }
 ]);
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({});
+db.inventory.find({});
 
+// 完全匹配数组本身的文档(字段、顺序一致)
+db.inventory.find({instock: [{ warehouse: 'B', qty: 15 },{ warehouse: 'C', qty: 35 }]});
 
-// 精准匹配数组的文档(字段、顺序一致)
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({instock: { warehouse: 'B', qty: 15 }});
+// 完全匹配数组元素的文档(字段(字段名，数目)、顺序一致)
+db.inventory.find({instock: { warehouse: 'B', qty: 15 }});
+db.inventory.find({instock: {warehouse: 'A', qty: 5}});
+db.inventory.find({instock: { qty: 5 ,warehouse: 'A'}});
 
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({instock: { qty: 5 ,warehouse: 'A'}});
-// 匹配的字段不在一个文档中
-db.getCollection('inventory').find({"instock.warehouse": 'A', "instock.qty": 5 });
+// 匹配的字段可不在一个数组元素中
+db.inventory.find({"instock.warehouse": 'A', "instock.qty": 5 });
 
 // 指定字段查询
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"instock.warehouse": 'C'});
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"instock.qty": {$gte: 15}});
+db.inventory.find({"instock.warehouse": 'C'});
+db.inventory.find({"instock.qty": {$gte: 15}});
 
 // 指定数组中第几个元素查询
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"instock.0.qty": {$lte: 20}});
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"instock.0.qty": {$gte: 20}});
+db.inventory.find({"instock.0.qty": {$lte: 20}});
+db.inventory.find({"instock.1.qty": {$gte: 20}});
 
 // 多个条件查询(elemMatch后是多个条件，非文档类型，没有顺序要求)
-// elemMatch表示数组中的同个元素满足后面所有的条件
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({"instock":{$elemMatch: {"qty":15, "warehouse":"B"}}});
-// 使用点访问符查询则表示数组中的同一个文档不需要同时满足后面条件。只要数组中文档有满足后面条件即可
-use('mongodbVSCodePlaygroundDB');
-db.getCollection('inventory').find({'instock.qty': 5,'instock.warehouse': 'C'});
+// elemMatch表示数组同一个元素满足后面所有的条件（元素包含满足条件的字段）
+db.inventory.find({"instock":{$elemMatch: {"qty":15, "warehouse":"B"}}});
+// 使用点访问符查询则表示数组中嵌套文档元素不需要同时满足后面条件。只要所有数组元素中文档有满足所有条件。
+db.inventory.find({'instock.qty': 5,'instock.warehouse': 'C'});
 
 

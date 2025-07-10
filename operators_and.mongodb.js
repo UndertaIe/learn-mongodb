@@ -13,7 +13,7 @@ db.inventory03.insertMany([
 db.inventory03.aggregate([
    {
       $set:{
-         result:{
+         "200<qty<=300":{
             $and:[
                {$gt: ["$qty",200]},
                {$lte: ["$qty",300]},  
@@ -24,9 +24,9 @@ db.inventory03.aggregate([
    {
       $set:{
          result2:{
-            $and:[
-               {$gt: ["$qty",200]},
-               {$lte: ["$qty",300]},  
+            $or:[
+               {$gt: ["$qty",300]},
+               {$lte: ["$qty",200]},  
             ]
          }
       }

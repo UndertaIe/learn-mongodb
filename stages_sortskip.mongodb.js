@@ -1,8 +1,5 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
 db.sales.find();
-
 db.sales.aggregate([
   {
     $sort:{

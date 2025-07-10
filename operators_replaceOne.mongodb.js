@@ -18,6 +18,21 @@ db.myColl.aggregate([
       }
   }
 ])
+db.myColl.aggregate([
+   {
+      $set: {
+         resultObject: {
+            $cond:{
+               if: {
+                  $eq: ["$name", "Cafe"]
+               },
+               then: "CAFE",
+               else: "$name"
+            }
+         }
+      }
+   }
+])
 
 db.inventory.deleteMany({})
 db.inventory.insertMany([

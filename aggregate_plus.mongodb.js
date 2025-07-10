@@ -1,8 +1,7 @@
 // Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
-db.getCollection("aggregate_plus").deleteMany({})
-db.getCollection("aggregate_plus").insertMany([
+db.aggregate_plus.deleteMany({})
+db.aggregate_plus.insertMany([
     {
         _id: 0, name: "Pepperoni", size: "small", price: 19,
         quantity: 10, date: ISODate("2021-03-13T08:14:30Z")
@@ -41,9 +40,8 @@ db.getCollection("aggregate_plus").insertMany([
     }
 ]);
 
-db.getCollection("aggregate_plus").find({});
-
-db.getCollection("aggregate_plus").aggregate([
+db.aggregate_plus.find({});
+db.aggregate_plus.aggregate([
     {
         $match: {
             size: "medium"
@@ -54,7 +52,7 @@ db.getCollection("aggregate_plus").aggregate([
             _id: "$name",
             totalQuantity: { $sum: "$quantity" },
             count: { $count: {} },
-            avg: { $avg: {} }
+            avg: { $avg: "$quantity" }
         }
     }
 ]);
@@ -100,7 +98,7 @@ db.users.find({});
 
 db.users.aggregate(
     [
-        {$project: { name:{$toUpper: "$_id"}, _id:0, likes:"$likes", joined_month: {$month: "$joined"} } },
+        {$set: { name:{$toUpper: "$_id"}, _id:0, likes:"$likes", joined_month: {$month: "$joined"} } },
         {$sort: {name:1}}
     ]
 )
@@ -113,13 +111,14 @@ db.users.aggregate(
     ]
 )
 
+db.testuser.insert({"name":"noob"})
 db.users.aggregate(
     [
         {$project:{likes:"$likes", _id:0}},
         {$unwind : "$likes" },
         {$group:{_id:"$likes", count:{$count:{}}} },
-        {$sort:{count:-1}},
-        {$limit: 3}
+        {$sort:{count:1}},
+        // {$limit: 3}
     ]
   )
 

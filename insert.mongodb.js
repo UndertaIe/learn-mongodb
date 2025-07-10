@@ -1,11 +1,9 @@
-// Select the database to use.
-use('test');
 
-db.getCollection("users").find({});
-
-db.getCollection("users").insert({"type":2,"name":"ning","story":"good story!"});
-db.getCollection("users").insertOne({"type":3,"name":"joe","story":"bad story!"});
-db.getCollection("users").insertMany([{"type":3,"name":"joe","story":"bad story!"},{"type":5,"name":"bobo","story":"normal story!"}])
+db.users.find({});
+db.users.deleteMany({});
+db.users.insert({"type":2,"name":"ning","story":"good story!"});
+db.users.insertOne({"type":3,"name":"joe","story":"bad story!"});
+db.users.insertMany([{"type":3,"name":"joe","story":"bad story!"},{"type":5,"name":"bobo","story":"normal story!"}])
 
 db.bulker.insertMany([
     {"_id":2,"key":"value1"},
@@ -33,7 +31,3 @@ db.bulker.bulkWrite( [
         }
      },  
  ] )
-
- db.bulker.updateMany(
-    {"_id":55},{"$set":{"key":"value1"}},
-)

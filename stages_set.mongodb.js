@@ -1,5 +1,3 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
 db.scores.deleteMany({})
 db.scores.insertMany([

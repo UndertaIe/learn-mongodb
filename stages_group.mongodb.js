@@ -1,8 +1,5 @@
-// Select the database to use.
-use('mongodbVSCodePlaygroundDB');
 
 db.scores.deleteMany({})
-
 db.scores.insertMany([
   { "_id" : 1, "item" : "abc", "price" : NumberDecimal("10"), "quantity" : NumberInt("2"), "date" : ISODate("2014-03-01T08:00:00Z") },
   { "_id" : 2, "item" : "jkl", "price" : NumberDecimal("20"), "quantity" : NumberInt("1"), "date" : ISODate("2014-03-01T09:00:00Z") },
@@ -15,34 +12,17 @@ db.scores.insertMany([
 ])
 db.scores.find({})
 
-// 集合的总文档/记录数
-db.scores.aggregate( [
-  {
-    $count:"document_count"
-  }
-] )
-
-// 集合的总文档/记录数
-db.scores.aggregate( [
-  {
-    $group:{
-      _id:null,
-      document_count:{
-        $count:{}
-      }
-    }
-  },
-  {
-    $project: {_id:0
-    }
-  }
-])
-
 // 字段去重
 db.scores.aggregate([
   {
     $group:{
       _id:"$item"
+    }
+  },
+  {
+    $project:{
+      _id:0,
+      item:"$_id"
     }
   }
 ])
@@ -95,7 +75,7 @@ db.sales.aggregate(
   }
 ])
 
-db.books.deleteMany()
+db.books.deleteMany({})
 db.books.insertMany([
   { "_id" : 8751, "title" : "The Banquet", "author" : "Dante", "copies" : 2 },
   { "_id" : 8752, "title" : "Divine Comedy", "author" : "Dante", "copies" : 1 },

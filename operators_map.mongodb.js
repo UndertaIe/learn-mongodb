@@ -8,14 +8,14 @@ db.grades.insertMany( [
    { quizzes: [ 3, 8, 9 ] }
  ] )
 
-//  Applies an expression to each item in an array and returns an array with the applied results.
-db.grades.aggregate( [
+// map将数组全部元素执行相同的操作后返回到数组。
+ db.grades.aggregate( [
    {
       $project: {
          adjustedGrades: {
            $map: {
              input: "$quizzes",
-             as: "g", // 数组element自定义名称
+             as: "g", // 数组element自定义形参
              in: { $multiply: [ "$$g", 2 ] }
            }
          }

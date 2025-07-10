@@ -17,13 +17,14 @@ db.cakeSales.insertMany( [
      state: "WA", price: 43, quantity: 134 }
 ] )
 
+// 分组计数$count: {} or $sum: 1,
 db.cakeSales.aggregate( [
    {
       $group: {
          _id: "$state",
          countByState: {
-            $count: {},
-            // $sum: 1,
+            // $count: {},
+            $sum: 1,
          }
       }
    }

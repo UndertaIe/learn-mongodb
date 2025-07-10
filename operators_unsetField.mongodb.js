@@ -18,4 +18,29 @@ db.inventory.aggregate( [
    } } }
 ] );
 
+db.col.deleteMany({});
+db.col.insertMany([
+   { "_id": 1, "name" : { "first" : "John", "last" : "Backus" } },
+   { "_id": 2, "name" : { "first" : "John", "last" : "McCarthy" } },
+   { "_id": 3, "name": { "first" : "Grace", "last" : "Hopper" } },
+   { "_id": 4, "firstname": "Ole-Johan", "lastname" : "Dahl" },
+])
+// err stage because some doc dont have `name` field
+db.col.aggregate([
+   { $replaceWith: "$name" }
+])
+db.col.aggregate([
+   { $replaceWith: { $mergeObjects: [ { _id: "$_id", first: "", last: "" }, "$name" ] } }
+])
+
+
+db.col.aggregate([
+   { $match: { name : { $exists: true, $not: { $type: "array" }, $type: "object" } } },
+   { $replaceWith: "$name" }
+])
+db.col.aggregate([
+   { $replaceWith: { $ifNull: [ "$name", { _id: "$_id", missingName: true} ] } }
+])
+
+
 

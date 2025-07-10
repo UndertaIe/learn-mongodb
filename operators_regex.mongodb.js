@@ -25,13 +25,3 @@ db.contacts.insertMany([
    { "_id": 4, "fname": "Colleen", "lname": "Duncan", "phone": "775-555-0187" },
    { "_id": 5, "fname": "Luna", "lname": "Clarke", "phone": "917-555-4414" }
  ])
-
- db.contacts.aggregate([
-   {
-     $project: {
-       matchedObject: {
-         $regexFind: { input: "$fname", regex: /(C(ar)*)ol/ }
-       }
-     }
-   }
- ])

@@ -1,6 +1,7 @@
 // Select the database to use.
 use('mongodbVSCodePlaygroundDB');
 
+// maxN返回数组中最大的两个元素
 db.aggregate( [
   {
      $documents: [
@@ -68,4 +69,6 @@ db.scores.insertMany([
 db.scores.aggregate([
   { $set: { maxScores: { $maxN: { n: 3, input: "$score" } } } },
 ])
-
+db.scores.aggregate([
+  { $set: { maxScores: { $minN: { n: 3, input: "$score" } } } },
+])

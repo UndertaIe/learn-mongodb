@@ -10,6 +10,7 @@ db.orders2.insertMany([
 { "_id" : 5, "item" : "VWZ2", description: "product 5", qty: 180 },
 ])
 
+// 连接字符串
 db.orders2.aggregate([
    {
       $set: {
